@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
-	pongo "github.com/flosch/pongo2"
 	"net/http"
+
+	pongo "github.com/flosch/pongo2"
+	"github.com/gorilla/mux"
 )
 
 /*var tmpls map[string]*pongo.Template
@@ -34,6 +35,12 @@ func main() {
 		vars := mux.Vars(req)
 
 		res.Write([]byte("Matched: " + vars["id"]))
+	})
+
+	r.NewRoute().MatcherFunc(func(req *http.Request, rm *mux.RouteMatch) bool {
+		return true
+	}).HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		res.Write([]byte("Oops! The page cannot be found."))
 	})
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("public")))
