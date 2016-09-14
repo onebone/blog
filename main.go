@@ -36,6 +36,8 @@ func render(name string, val pongo.Context, res http.ResponseWriter) bool {
 }
 
 func main() {
+	log.Println("Starting blog...")
+
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
@@ -46,6 +48,10 @@ func main() {
 		vars := mux.Vars(req)
 
 		res.Write([]byte("Matched: " + vars["id"]))
+	})
+
+	r.HandleFunc("/admin", func(res http.ResponseWriter, req *http.Request) {
+		render("admin/login", pongo.Context{}, res)
 	})
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("public")))

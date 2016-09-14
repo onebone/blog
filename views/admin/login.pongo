@@ -1,0 +1,11 @@
+{% include "../header.pongo" %}
+<div class="container">
+	{# http://stackoverflow.com/questions/19461521/how-to-center-an-element-horizontally-and-vertically #}
+	<div style="position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);">
+		<h3>로그인</h3>
+	</div>
+</div>
+{% include "../footer.pongo" %}

@@ -4,5 +4,12 @@
 		<meta charset="utf-8"></meta>
 		<title>{{title}}</title>
 		<link rel="stylesheet" type="text/css" href="/_css/materialize.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/_css/main.css" />
 		<script src="/_js/jquery.min.js"></script>
 	</head>
+	<body>
+	<nav>
+		<div class="nav-wrapper center cyan lighten-1">
+			<a href="#" class="brand-logo">Blog</a>
+		</div>
+	</nav>
