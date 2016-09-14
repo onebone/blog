@@ -16,6 +16,8 @@ func init() {
  	}
 }*/
 
+var lang Language
+
 func render(name string, val pongo.Context, res http.ResponseWriter) bool {
 	tmpl, err := pongo.FromFile("views/" + name + ".pongo")
 	if err != nil {
@@ -27,6 +29,10 @@ func render(name string, val pongo.Context, res http.ResponseWriter) bool {
 		val["title"] = "Blog"
 	}
 
+	if _, ok := val["lang"]; !ok {
+		val["lang"] = lang.Map
+	}
+
 	err = tmpl.ExecuteWriter(val, res)
 	if err != nil {
 		log.Println(err.Error())
@@ -36,7 +42,18 @@ func render(name string, val pongo.Context, res http.ResponseWriter) bool {
 }
 
 func main() {
+	lang.Init("en_US")
+
 	log.Println("Starting blog...")
+
+	pongo.RegisterFilter("get_value", func(in *pongo.Value, param *pongo.Value) (*pongo.Value, *pongo.Error){
+		if in.Contains(param) {
+			val := in.Interface().(map[string]string)
+			return pongo.AsValue(val[param.String()]), nil
+		}
+
+		return nil, nil
+	})
 
 	r := mux.NewRouter()
 

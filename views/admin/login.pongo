@@ -5,7 +5,7 @@
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);">
-		<h3>로그인</h3>
+		<h3>{{ lang|get_value:"admin.login" }}</h3>
 	</div>
 </div>
 {% include "../footer.pongo" %}
