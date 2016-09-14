@@ -5,7 +5,18 @@
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);">
-		<h3>{{ lang|get_value:"admin.login" }}</h3>
+		<div class="center login-form">
+			<h3>{{ lang|get_value:"admin.login" }}</h3>
+			<form method="post" action="/login">
+				<input type="text" name="login_username" placeholder="{{ lang|get_value:"admin.login.username" }}" />
+				<input type="password" name="login_password" placeholder="{{ lang|get_value:"admin.login.password" }}" />
+
+				<button class="btn waves-effect"><i class="material-icons left">lock_open</i>{{ lang|get_value:"admin.login.submit" }}</button>
+			</form>
+
+			<p id="warning" style="color: red;"></p>
+		</div>
 	</div>
 </div>
+<script src="/_js/login.js"></script>
 {% include "../footer.pongo" %}

@@ -8,14 +8,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-/*var tmpls map[string]*pongo.Template
-
-func init() {
-	tmpls = map[string]*pongo.Template {
-	 	"index": pongo.Must(pongo.FromFile("views/index.pongo")),
- 	}
-}*/
-
 var lang Language
 
 func render(name string, val pongo.Context, res http.ResponseWriter) bool {
@@ -52,24 +44,28 @@ func main() {
 			return pongo.AsValue(val[param.String()]), nil
 		}
 
-		return nil, nil
+		return pongo.AsValue("No language resource"), nil
 	})
 
 	r := mux.NewRouter()
 
 	r.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
 		render("index", pongo.Context{}, res)
-	})
+	}).Methods("GET")
 
 	r.HandleFunc("/post/{id:[0-9]+}", func(res http.ResponseWriter, req *http.Request) {
 		vars := mux.Vars(req)
 
 		res.Write([]byte("Matched: " + vars["id"]))
-	})
+	}).Methods("GET")
 
 	r.HandleFunc("/admin", func(res http.ResponseWriter, req *http.Request) {
 		render("admin/login", pongo.Context{}, res)
-	})
+	}).Methods("GET")
+
+	r.HandleFunc("/login", func(res http.ResponseWriter, req *http.Request) {
+		// TODO
+	}).Methods("POST")
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("public")))
 

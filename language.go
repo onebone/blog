@@ -46,10 +46,15 @@ func (l *Language) Get(key string, val ...string) (ret string) {
 
 var langList = map[string]map[string]string{
 	"en_US": {
-		"test.test": "Test {0}",
 		"admin.login": "Login",
+		"admin.login.username": "Username",
+		"admin.login.password": "Password",
+		"admin.login.submit": "Login",
 	},
 	"ko_KR": {
 		"admin.login": "로그인",
+		"admin.login.username": "유저이름",
+		"admin.login.password": "비밀번호",
+		"admin.login.submit": "로그인",
 	},
 }
