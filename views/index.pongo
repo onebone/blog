@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8"></meta>
-		<link rel="stylesheet" type="text/css" href="/_css/semantic.min.css">
-		<script src="/_js/semantic.min.js"></script>
-	</head>
+{% include "header.pongo" %}
 	<body>
-		<div class="ui large top fixed borderless menu">
-			<div class="ui container">
-				<a class="header item">Blog</a>
+		<nav>
+			<div class="nav-wrapper center">
+				<a href="#" class="brand-logo">Blog</a>
 			</div>
+		</nav>
+
+		<div class="container">
+
 		</div>
+		<script src="/_js/materialize.min.js"></script>
 	</body>
-</html>
+{% include "footer.pongo" %}

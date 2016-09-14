@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"></meta>
+		<title>{{title}}</title>
+		<link rel="stylesheet" type="text/css" href="/_css/materialize.min.css"/>
+		<script src="/_js/jquery.min.js"></script>
+	</head>

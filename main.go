@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
 	pongo "github.com/flosch/pongo2"
@@ -18,15 +19,25 @@ func init() {
 func render(name string, val pongo.Context, res http.ResponseWriter) bool {
 	tmpl, err := pongo.FromFile("views/" + name + ".pongo")
 	if err != nil {
+		log.Println(err.Error())
 		return false
 	}
 
-	tmpl.ExecuteWriter(val, res)
+	if _, ok := val["title"]; !ok {
+		val["title"] = "Blog"
+	}
+
+	err = tmpl.ExecuteWriter(val, res)
+	if err != nil {
+		log.Println(err.Error())
+		return false
+	}
 	return true
 }
 
 func main() {
 	r := mux.NewRouter()
+
 	r.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
 		render("index", pongo.Context{}, res)
 	})
@@ -37,12 +48,14 @@ func main() {
 		res.Write([]byte("Matched: " + vars["id"]))
 	})
 
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("public")))
+
 	r.NewRoute().MatcherFunc(func(req *http.Request, rm *mux.RouteMatch) bool {
 		return true
 	}).HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+		res.WriteHeader(http.StatusNotFound)
 		res.Write([]byte("Oops! The page cannot be found."))
 	})
 
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("public")))
 	http.ListenAndServe(":1234", r)
 }
