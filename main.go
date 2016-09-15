@@ -44,6 +44,9 @@ func main() {
 
 	log.Println("Starting blog...")
 
+	provider = &SQLiteProvider{}
+	provider.init()
+
 	pongo.RegisterFilter("get_value", func(in *pongo.Value, param *pongo.Value) (*pongo.Value, *pongo.Error){
 		if in.Contains(param) {
 			val := in.Interface().(map[string]string)
@@ -54,6 +57,7 @@ func main() {
 	})
 
 	r := mux.NewRouter()
+	r.StrictSlash(true)
 
 	r.HandleFunc("/", func(res http.ResponseWriter, req *http.Request) {
 		render("index", pongo.Context{}, res)
@@ -65,13 +69,25 @@ func main() {
 		res.Write([]byte("Matched: " + vars["id"]))
 	}).Methods("GET")
 
-	r.HandleFunc("/admin", func(res http.ResponseWriter, req *http.Request) {
-		render("admin/login", pongo.Context{}, res)
+	r.HandleFunc("/admin/", func(res http.ResponseWriter, req *http.Request) {
+		render("login", pongo.Context{}, res)
 	}).Methods("GET")
 
 	r.HandleFunc("/login", func(res http.ResponseWriter, req *http.Request) {
 		// TODO
 	}).Methods("POST")
+
+	r.HandleFunc("/login/", func(res http.ResponseWriter, req *http.Request) {
+		render("login", pongo.Context{}, res)
+	}).Methods("GET")
+
+	r.HandleFunc("/register", func(res http.ResponseWriter, req *http.Request) {
+		// TODO
+	}).Methods("POST")
+
+	r.HandleFunc("/register/", func(res http.ResponseWriter, req *http.Request) {
+		render("register", pongo.Context{}, res)
+	})
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("public")))
 

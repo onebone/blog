@@ -1,0 +1,23 @@
+{% include "header.pongo" %}
+<div class="container">
+	{# http://stackoverflow.com/questions/19461521/how-to-center-an-element-horizontally-and-vertically #}
+	<div style="position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);">
+		<div class="center login-form">
+			<h3>{{ lang|get_value:"account.login" }}</h3>
+			<form method="post" action="/login">
+				<input type="text" name="login_username" placeholder="{{ lang|get_value:"account.login.username" }}" />
+				<input type="password" name="login_password" placeholder="{{ lang|get_value:"account.login.password" }}" />
+
+				<button class="btn waves-effect"><i class="material-icons left">lock_open</i>{{ lang|get_value:"account.login.submit" }}</button>
+			</form>
+			<a href="/register/">{{ lang|get_value:"account.login.noaccount" }}</a>
+
+			<p id="warning" style="color: red;"></p>
+		</div>
+	</div>
+</div>
+<script src="/_js/login.js"></script>
+{% include "footer.pongo" %}
