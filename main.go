@@ -10,6 +10,12 @@ import (
 
 var lang Language
 
+func checkErr(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
 func render(name string, val pongo.Context, res http.ResponseWriter) bool {
 	tmpl, err := pongo.FromFile("views/" + name + ".pongo")
 	if err != nil {
